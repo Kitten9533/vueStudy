@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+	<div id="filter">
+		<!-- {{message}} -->
+		{{message | capitalize}}
+	</div>
+	<a v-bind:href="url"></a>
+	<a :href="url"></a>
+	<a v-on:click="doSomething"></a>
+	<a @click="doSomething"></a>
+	<div id="example">
+		<p>original:{{data}}</p>
+		<p>Computed reverse:{{Creverse}}</p>
+		<p>Methods reverse:{{Mreverse()}}</p>
+	</div>
+	<div id="demo">
+		<p>{{fullName}}</p>	
+		<p>{{getFullName}}</p>
+	</div>
+	<script>
+		var filter = new Vue({
+			el:"#filter",
+			data:{
+				message:'aaaa'
+			},
+			filters:{
+				capitalize:function(value){
+					if(!value) return ''
+					value = value.toString()
+					console.log(value)
+					return value.charAt(0).toUpperCase() + value.slice(1)
+				}
+			}
+		})
+		var example = new Vue({
+			el:"#example",
+			data:{
+				data:"Hello World!"
+			},
+			computed:{
+				Creverse:function(){
+					console.log('computed')
+					return this.data.split('').reverse().join('')
+				}
+			},
+			methods:{
+				Mreverse:function(){
+					console.log('methods')
+					return this.data.split('').reverse().join('')
+				}
+			}
+		})
+		var demo = new Vue({
+			el:"#demo",
+			data:{
+				firstName:'Foo',
+				lastName:'Bar',
+			},
+			computed:{
+				fullName:function(){
+					return this.firstName + ' ' + this.lastName
+				},
+				getFullName:{
+					get:function(){
+						return this.firstName + ' ' + this.lastName
+					},
+					set:function(newValue){
+						var name = newValue.split(' ')
+						this.firstName = name[0]
+						this.lastName = name[name.length - 1]
+					}
+				}
+			}
+		})
+	</script>
+</body>
+</html>

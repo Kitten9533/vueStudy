@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+	<div id="app">
+		{{message}}
+	</div>
+	<div id="app-2">
+		<span v-bind:title="message">
+			悬停查看
+		</span>
+	</div>
+	<div id="app-3">
+		<p v-if="seen">现在你看到我了<p>
+	</div>
+	<div id="app-4">
+		<ol>
+			<li v-for="todo in todos">
+				{{todo.text}}
+			</li>
+		</ol>
+	</div>
+	<div id="app-5">
+		<p>{{message}}</p>
+		<button v-on:click="reverseMessage">逆转消息</button>
+	</div>
+	<div id="app-6">
+		<p>{{message}}</p>
+		<input v-model="message">
+	</div>
+	<div id="app-7">
+		<ol>
+			<todo-item v-for="item in list" v-bind:todo="item"></todo-item>
+		</ol>
+	</div>
+
+	<script type="text/javascript">
+		var app = new Vue({
+			el:'#app',
+			data:{
+				message:'Hello Vue'
+			}
+		})
+		var app2 = new Vue({
+			el:"#app-2",
+			data:{
+				message:'页面加载于' + new Date()
+			}
+		})
+		var app3 = new Vue({
+			el:"#app-3",
+			data:{
+				seen:false
+			}
+		})
+		var app4 = new Vue({
+			el:"#app-4",
+			data:{
+				todos:[
+					{text:"学习1"},
+					{text:"学习2"},
+					{text:"学习3"}
+				]
+			}
+		})
+		var app5 = new Vue({
+			el:"#app-5",
+			data:{
+				message:'hello'
+			},
+			methods:{
+				reverseMessage: function(){
+					this.message = this.message.split('').reverse().join('')
+				}
+			}
+		})
+		var app6 = new Vue({
+			el:'#app-6',
+			data:{
+				message:'Hello Vue!'
+			}
+		})
+		Vue.component('todo-item',{
+			props:['todo'],
+			template:'<li>{{todo.text}}</li>'
+		})
+		var app7 = new Vue({
+			el:'#app-7',
+			data:{
+				list:[
+					{text:"aaa"},
+					{text:"nnn"},
+					{text:"ccc"}
+				]
+			}
+		})
+	</script>
+</body>
+</html>
