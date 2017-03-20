@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>form.html</title>
+	<script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+	<div id="app1">
+		<input type="checkbox" id="checkbox" v-model="checked"/>
+		<label for="checkbox">{{checked}}</label>
+	</div>
+	<div id="app2">
+		<input type="checkbox" id="jack" value="Jack" v-model="checkedNames">
+		<label for="jack">Jack</label>
+		<input type="checkbox" id="john" value="John" v-model="checkedNames">
+		<label for="john">John</label>
+		<input type="checkbox" id="mike" value="Mike" v-model="checkedNames">
+		<label for="mike">Mike</label>
+		<br>
+		<span>Checked names: {{ checkedNames }}</span>
+	</div>
+	<div id="app3">
+		<select v-model="selected">
+			<option>A</option>
+			<option>B</option>
+			<option>C</option>
+		</select>
+		<p>{{selected}}</p>
+	</div>
+	<div id="app4">
+		<select v-model="selected" multiple>
+			<option>A</option>
+			<option>B</option>
+			<option>C</option>
+		</select>
+		<p>{{selected}}</p>
+	</div>
+
+	<script type="text/javascript">
+		var app1 = new Vue({
+			el:"#app1",
+			data:{
+				checked:false
+			}
+		})
+		var app2 = new Vue({
+			el:'#app2',
+			data:{
+				checkedNames:[]
+			}
+		})
+		var app3 = new Vue({
+			el:'#app3',
+			data:{
+				selected:''
+			}
+		})
+		var app4 = new Vue({
+			el:'#app4',
+			data:{
+				selected:[]   //和  selected:''  一样
+			}
+		})
+	</script>
+</body>
+</html>
