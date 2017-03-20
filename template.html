@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>classStyle</title>
+	<script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+	<div id="app1">
+		<my-component class="boom1 boom2"></my-component>	
+	</div>
+
+	<div id="app2">
+		<ol>
+			<todo-item v-for="item in todos" v-bind:todo="item"></todo-item>
+		</ol>
+	</div>
+
+	<div id="app3">
+		<template v-if="loginType === 'username'">
+			<label>username</label>
+			<input type="text" name="username" placeholder="enter username..." />
+		</template>
+		<template v-else>
+			<label>email</label>
+			<input type="text" name="email" placeholder="enter email"/>
+		</template>
+	</div>
+
+	<ul id="app4">
+		<li v-for="(item,index) in items">{{parentMessage}}-{{index}}-{{item.child}}</li>
+	</ul>
+
+	<div id="app5">
+		<span v-for="n in 10">{{ n }}</span>
+	</div>
+
+	<div id="todo-list-example">
+		<input v-model="newTodoText"
+			v-on:keyup.enter="addNewTodo"
+			placeholder = "add a todo"
+		/>
+		<ul>
+			<li is="todo-item2"
+				v-for="(todo,index) in todos"
+				v-bind:title="todo"
+				v-on:remove = "todos.splice(index,1)"
+			>
+			</li>
+		</ul>
+	</div>
+
+	<script type="text/javascript">
+		Vue.component('my-component', {
+		  	template: '<p class="foo bar">Hi</p>'
+		})
+		var app1 = new Vue({
+			el:"#app1"
+		})
+
+		Vue.component('todo-item',{
+			props:['todo'],
+			template: '<li>{{todo.text}}</li>'
+		})
+		var app2 = new Vue({
+			el:'#app2',
+			data:{
+				todos:[
+					{text:'1'},
+					{text:'2'},
+					{text:'3'}
+				]
+			}
+		})
+
+		var app3 = new Vue({
+			el:"#app3",
+			data:{
+				loginType:"username"
+			}
+		})
+
+		var app4 = new Vue({
+			el:'#app4',
+			data:{
+				parentMessage:"parent",
+				items:[
+					{child:'Foo'},
+					{child:'Boom'}
+				]
+			}
+		})
+
+		var app5 = new Vue({
+			el:'#app5'
+		})
+
+		Vue.component('todo-item2',{
+			template:'\
+				<li>\
+					{{title}}\
+					<button v-on:click="$emit(\'remove\')">X</button>\
+				</li>\
+			',
+			props:['title']
+		})
+		new Vue({
+			el:"#todo-list-example",
+			data:{
+				newTodoText:'',
+				todos:[
+			      'Do the dishes',
+			      'Take out the trash',
+			      'Mow the lawn'
+				]
+			},
+			methods:{
+				addNewTodo:function(){
+					this.todos.push(this.newTodoText)
+					this.newTodoText=''
+				}
+			}
+		})
+
+	</script>
+</body>
+</html>
