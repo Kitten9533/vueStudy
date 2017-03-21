@@ -35,6 +35,14 @@
 		</select>
 		<p>{{selected}}</p>
 	</div>
+	<div id="app5">
+		<select v-model="selected">
+			<option v-for="option in options" :value="option.value">
+				{{option.text}}
+			</option>
+		</select>
+		<p>{{selected}}</p>
+	</div>
 
 	<script type="text/javascript">
 		var app1 = new Vue({
@@ -61,6 +69,18 @@
 				selected:[]   //和  selected:''  一样
 			}
 		})
+		var app = new Vue({
+			el:'#app5',
+			data:{
+				selected:'A',
+				options:[
+					{text:'one',value:'1'},
+					{text:'one2',value:'2'},
+					{text:'one3',value:'3'},
+				]
+			}
+		})
+
 	</script>
 </body>
 </html>
