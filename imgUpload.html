@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>imgUpload</title>
+	<style>
+		.box{
+			width:200px;
+			height: 80px;
+			position:relative;
+		}
+		input{
+			position:absolute;
+			left:-9999px;
+		}
+		label{
+			transition:0.3s all;
+			position: absolute;
+			border-radius: 5px;
+			top:0;left: 0;right: 0;bottom: 0;
+			z-index: 2;
+			background: #efeeee;
+			border:1px solid #efeeee;
+		}
+		.preview-img:hover, label:hover{
+			transition:0.3s all;
+			transform: scale(1.015);
+			box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.3); 
+		}
+		.preview-img{
+			border-radius: 5px;
+			width:100%;
+			height: 100%;
+			z-index: 3;
+			position: absolute;
+		}
+		.box img{
+			border-radius: 5px;
+		}
+	</style>
+	<script type="text/javascript" src="js/vue.js"></script>
+</head>
+<body>
+	<div id="app" class="box">
+		<div class="box">
+	      <img :src="dataUrl" class="preview-img" @click="previewclick">
+	    </div>
+		<input 
+			ref="inputer"
+			:id="inputId" 
+		 	type="file"
+		 	:name="name"
+		 	:accept="accept"
+		 	capture="video"
+		 	@change="handleFileChange"/>
+		<label :for="inputId"></label>
+		{{errTxt}}{{fileName}}
+	</div>
+	<script>
+		new Vue({
+			el: '#app',
+			data: {
+				inputId: 'upload',
+				name: 'image',
+				accept: '',
+				video: '',
+				errTxt: '',
+				maxSize: 2000,
+				dataUrl: ''
+			},
+			methods: {
+				handleFileChange (e) {
+					console.log(e);
+					if(typeof e.target === 'undefined') this.file = e[0];
+					else this.file = e.target.files[0];
+					let size = Math.floor(this.file.size/1024);
+					if(size > this.maxSize){
+						this.errTxt = '文件最大不能超过2M';
+					}
+					let accept = this.accept.split(',');
+					this.onChange && this.onChange(this.file, e.target.value);
+					this.imgPreview(this.file);
+					this.fileName = this.file.name;
+				},
+				previewclick () {
+					document.getElementById(this.inputId).click();
+				},
+				imgPreview (file) {
+					let self = this;
+					if (!file || !window.FileReader) return;
+     				if (/^image/.test(file.type)) {
+				        var reader = new FileReader();
+				        reader.readAsDataURL(file);
+
+				        reader.onloadend = function () {
+				        	self.dataUrl = this.result;
+				    	}
+					}
+				}
+			}
+		})
+	</script>
+</body>
+</html>
