@@ -9,7 +9,8 @@ function resolve (dir) {
 
 module.exports = {
   entry: {
-    app: './src/main.js'
+    // app: './src/main.js'
+    app: path.resolve(__dirname, '../src/main.js')
   },
   output: {
     path: config.build.assetsRoot,
@@ -17,6 +18,11 @@ module.exports = {
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath
+    // 输出路径是 myProject/output/static
+    // path: path.resolve(__dirname, '../output/static'),
+    // publicPath: 'static/',
+    // filename: '[name].[hash].js',
+    // chunkFilename: '[id].[chunkhash].js'
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
